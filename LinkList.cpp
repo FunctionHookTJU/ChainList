@@ -93,30 +93,23 @@ bool LinkList::remove(const int& location){
     return true;
 }
 
-void LinkList::converse(){
-    
-    if(len==0||len==1){
+void LinkList::converse() {
+    if (len == 0 || len == 1) {
         return;
     }
-
-    int *num=new int[len];
-    node *p=head;
     
-    for(int i=0;i<len;i++){
-        num[i]=p->value;
-        p=p->next;
+    node* prev = nullptr;
+    node* curr = head;
+    node* next = nullptr;
+    
+    while (curr != nullptr) {
+        next = curr->next;  
+        curr->next = prev;  
+        prev = curr;       
+        curr = next;      
     }
-    for(int i=0; i<len/2; i++){
-        int temp = num[i];
-        num[i] = num[len-1-i];
-        num[len-1-i] = temp;
-    }
-    p=head;
-    for(int i=0;i<len;i++){
-        p->value=num[i];
-        p=p->next;
-    }
-    delete[] num;
+    
+    head = prev;
 }
 
 void LinkList::append(const LinkList& append_list){
@@ -126,7 +119,7 @@ void LinkList::append(const LinkList& append_list){
     
     if (head == nullptr) {
         node *p_append = append_list.head;
-        // 创建新的头节点
+
         head = new node();
         head->value = p_append->value;
         head->next = nullptr;
@@ -135,7 +128,7 @@ void LinkList::append(const LinkList& append_list){
         node *p_current = head;
         p_append = p_append->next;
         
-        // 复制剩余节点
+    
         while (p_append != nullptr) {
             node *new_node = new node();
             new_node->value = p_append->value;
@@ -164,7 +157,6 @@ void LinkList::append(const LinkList& append_list){
         
         p_append = p_append->next;
         
-        // 更新长度计数
         len++;
     }
 }
