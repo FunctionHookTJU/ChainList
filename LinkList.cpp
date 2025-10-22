@@ -113,50 +113,36 @@ void LinkList::converse() {
 }
 
 void LinkList::append(const LinkList& append_list){
+    // 如果要追加的链表为空，直接返回
     if (append_list.head == nullptr) {
         return; 
     }
     
-    if (head == nullptr) {
-        node *p_append = append_list.head;
-
-        head = new node();
-        head->value = p_append->value;
-        head->next = nullptr;
-        len++;
-        
-        node *p_current = head;
-        p_append = p_append->next;
-        
-    
-        while (p_append != nullptr) {
-            node *new_node = new node();
-            new_node->value = p_append->value;
-            new_node->next = nullptr;
-            p_current->next = new_node;
-            p_current = new_node;
-            p_append = p_append->next;
-            len++;
-        }
-        return;
-    }
-    
+    // 找到当前链表的尾节点（如果当前链表为空则为nullptr）
     node *p_current = head;
-    while (p_current->next != nullptr) {
-        p_current = p_current->next;
+    if (head != nullptr) {
+        while (p_current->next != nullptr) {
+            p_current = p_current->next;
+        }
     }
     
+    // 遍历要追加的链表，复制所有节点
     node *p_append = append_list.head;
     while (p_append != nullptr) {
         node *new_node = new node();
         new_node->value = p_append->value;
         new_node->next = nullptr;
         
-        p_current->next = new_node;
+        if (p_current == nullptr) {
+            // 当前链表为空，设置新节点为头节点
+            head = new_node;
+        } else {
+            // 当前链表非空，追加到尾部
+            p_current->next = new_node;
+        }
+        
         p_current = new_node;
-        
         p_append = p_append->next;
-        
         len++;
     }
 }

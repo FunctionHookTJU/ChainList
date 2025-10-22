@@ -154,5 +154,48 @@ bool DuLink::remove(const int& location) {
 
 
 void DuLink::append(const DuLink& append_list){
+    if (append_list.head == nullptr) {
+        return;
+    }
 
+    node* p_append = append_list.head;
+
+    // 当前链表为空：创建新链表并复制所有节点
+    if (head == nullptr) {
+        head = new node();
+        head->value = p_append->value;
+        head->next = nullptr;
+        head->pre = nullptr;
+        tail = head;
+        len++;
+
+        p_append = p_append->next;
+        while (p_append != nullptr) {
+            node* new_node = new node();
+            new_node->value = p_append->value;
+            new_node->next = nullptr;
+            new_node->pre = tail;
+            tail->next = new_node;
+            tail = new_node;
+            len++;
+            p_append = p_append->next;
+        }
+        return;
+    }
+
+    // 当前链表非空：从 tail 开始追加复制节点
+    node* p_current = tail;
+    while (p_append != nullptr) {
+        node* new_node = new node();
+        new_node->value = p_append->value;
+        new_node->next = nullptr;
+        new_node->pre = p_current;
+        if (p_current != nullptr) {
+            p_current->next = new_node;
+        }
+        p_current = new_node;
+        tail = new_node;
+        len++;
+        p_append = p_append->next;
+    }
 }

@@ -1,6 +1,6 @@
 // 自行实现双向链表
 #ifndef DULINK_H
-#endif // DULINK_H
+#define DULINK_H
 class DuLink {
 private:
     //value为节点的值， next为后继节点。
@@ -25,3 +25,5 @@ public:
     void append(const DuLink& append_list);
     ~DuLink();
 };
+
+#endif // DULINK_H
