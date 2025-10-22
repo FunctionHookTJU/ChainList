@@ -15,7 +15,7 @@ CycLink::~CycLink(){
         p = p->next;
         delete toDelete;
     }
-    delete p;  // 删除最后一个节点
+    delete p;
 }
 
 int CycLink::length() const {
@@ -45,25 +45,21 @@ void CycLink::insert(const int& data, const int& location) {
     newNode->value = data;
     newNode->next = nullptr;
     
-    // 空链表：创建第一个节点
     if (head == nullptr) {
-        newNode->next = newNode;  // 指向自己
+        newNode->next = newNode;
         head = newNode;
         tail = newNode;
     }
-    // 在头部插入
     else if (location == 0) {
         newNode->next = head;
         head = newNode;
-        tail->next = head;  // 更新尾节点的 next
+        tail->next = head;
     }
-    // 在尾部插入
     else if (location == len) {
-        newNode->next = tail->next;  // 指向原来的 head
+        newNode->next = tail->next;
         tail->next = newNode;
         tail = newNode;
     }
-    // 在中间插入
     else {
         node* p = head;
         int count = 0;
@@ -85,7 +81,6 @@ bool CycLink::remove(const int& location) {
     
     node* toDelete = nullptr;
     
-    // 仅有一个节点
     if (head == tail) {
         toDelete = head;
         delete toDelete;
@@ -95,14 +90,12 @@ bool CycLink::remove(const int& location) {
         return true;
     }
     
-    // 删除头节点
     if (location == 0) {
         toDelete = head;
         head = head->next;
-        tail->next = head;  // 更新尾节点的 next
+        tail->next = head;
         delete toDelete;
     }
-    // 删除尾节点
     else if (location == len - 1) {
         node* p = head;
         while (p->next != tail) {
@@ -113,7 +106,6 @@ bool CycLink::remove(const int& location) {
         tail->next = head;
         delete toDelete;
     }
-    // 删除中间节点
     else {
         node* p = head;
         int count = 0;
@@ -135,7 +127,7 @@ void CycLink::converse() {
         return;
     }
     
-    node* prev = tail;  // 循环链表从 tail 开始
+    node* prev = tail;
     node* curr = head;
     node* next = nullptr;
     
@@ -151,12 +143,10 @@ void CycLink::converse() {
 }
 
 void CycLink::append(const CycLink& append_list) {
-    // 如果要追加的链表为空，直接返回
     if (append_list.head == nullptr) {
         return;
     }
     
-    // 当前链表为空
     if (head == nullptr) {
         node* p_append = append_list.head;
         for (int i = 0; i < append_list.len; i++) {
@@ -178,12 +168,11 @@ void CycLink::append(const CycLink& append_list) {
         return;
     }
     
-    // 当前链表非空：从 tail 开始追加
     node* p_append = append_list.head;
     for (int i = 0; i < append_list.len; i++) {
         node* new_node = new node();
         new_node->value = p_append->value;
-        new_node->next = head;  // 新节点指向 head（循环）
+        new_node->next = head;
         tail->next = new_node;
         tail = new_node;
         p_append = p_append->next;
