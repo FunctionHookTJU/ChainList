@@ -6,8 +6,14 @@ DuLink::DuLink(){
     len = 0;         // 初始长度为0
 }
 DuLink::~DuLink(){
-
+    node* p = head;
+    while (p != nullptr) {
+        node* toDelete = p;
+        p = p->next;
+        delete toDelete;
+    }
 }
+
 int DuLink::length() const {
     return len;
 }

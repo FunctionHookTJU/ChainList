@@ -17,6 +17,12 @@ LinkList::LinkList(){
 }
 
 LinkList::~LinkList(){
+    node* p = head;
+    while (p != nullptr) {
+        node* toDelete = p;
+        p = p->next;
+        delete toDelete;
+    }
 }
 
 int LinkList::length() const{
